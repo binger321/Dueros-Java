@@ -26,7 +26,7 @@ public class ConstellationQueryController {
 
     @ApiOperation(value = "星座查询")
     @RequestMapping(value = "/query")
-    public void query(HttpServletRequest request, HttpServletResponse response, @RequestBody String data) throws IOException {
+    public void query(HttpServletResponse response, @RequestBody String data) throws IOException {
         System.out.println(data);
         // 根据request创建Bot
         ConstellationBot bot = new ConstellationBot(data);
