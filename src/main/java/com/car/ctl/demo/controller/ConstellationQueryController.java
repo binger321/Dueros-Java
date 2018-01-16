@@ -3,6 +3,7 @@ package com.car.ctl.demo.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,9 +26,10 @@ public class ConstellationQueryController {
 
     @ApiOperation(value = "星座查询")
     @RequestMapping(value = "/query")
-    public void query(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void query(HttpServletRequest request, HttpServletResponse response, @RequestBody String data) throws IOException {
+        System.out.println(data);
         // 根据request创建Bot
-        ConstellationBot bot = new ConstellationBot(request);
+        ConstellationBot bot = new ConstellationBot(data);
 
         // 打开签名验证
         // bot.enableVerify();
