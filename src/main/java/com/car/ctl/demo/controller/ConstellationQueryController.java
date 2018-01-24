@@ -31,9 +31,9 @@ public class ConstellationQueryController {
 //        System.out.println(request.getServletContext());
 //        System.out.println(request.getContextPath());
         // 根据request创建Bot
-        if (data != null && data.length() > 0){
-            return "{\"status\":1,\"msg\":\"入参为空！！\"}";
-        }
+//        if (data != null && data.length() > 0){
+//            return "{\"status\":1,\"msg\":\"入参为空！！\"}";
+//        }
         System.out.println(data);
         ConstellationBot bot = new ConstellationBot(data);
 
@@ -50,6 +50,7 @@ public class ConstellationQueryController {
             response.setCharacterEncoding("UTF-8");
             // 返回response
             response.getWriter().append(responseJson);
+            System.out.println("已结束：" +responseJson);
 //            return responseJson;
         } catch (Exception e) {
             response.getWriter().append("{\"status\":1,\"msg\":" + e.getMessage() + "\"\"}");
