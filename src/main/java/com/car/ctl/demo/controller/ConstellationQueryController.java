@@ -31,8 +31,11 @@ public class ConstellationQueryController {
 //        System.out.println(request.getServletContext());
 //        System.out.println(request.getContextPath());
         // 根据request创建Bot
-        System.out.println(data);
+        if (data != null && data.length() > 0){
+            return "{\"status\":1,\"msg\":\"入参为空！！\"}";
+        }
         ConstellationBot bot = new ConstellationBot(data);
+        System.out.println(data);
 
         // 打开签名验证
         // bot.enableVerify();
