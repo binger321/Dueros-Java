@@ -26,11 +26,12 @@ public class ConstellationQueryController {
 
     @ApiOperation(value = "星座查询")
     @RequestMapping(value = "/query")
-    public String query(@RequestBody String data) throws IOException {
+    public String query(@RequestBody(required = false) String data) throws IOException {
 //        System.out.println(request.getQueryString());
 //        System.out.println(request.getServletContext());
 //        System.out.println(request.getContextPath());
         // 根据request创建Bot
+        System.out.println(data);
         ConstellationBot bot = new ConstellationBot(data);
 
         // 打开签名验证
