@@ -26,12 +26,12 @@ public class ConstellationQueryController {
 
     @ApiOperation(value = "星座查询")
     @RequestMapping(value = "/query")
-    public void query(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println(request.getQueryString());
-        System.out.println(request.getServletContext());
-
+    public String query(@RequestBody String data) throws IOException {
+//        System.out.println(request.getQueryString());
+//        System.out.println(request.getServletContext());
+//        System.out.println(request.getContextPath());
         // 根据request创建Bot
-        ConstellationBot bot = new ConstellationBot(request);
+        ConstellationBot bot = new ConstellationBot(data);
 
         // 打开签名验证
         // bot.enableVerify();
@@ -43,11 +43,13 @@ public class ConstellationQueryController {
             // 调用bot的run方法
             String responseJson = bot.run();
             // 设置response的编码UTF-8
-            response.setCharacterEncoding("UTF-8");
+//            response.setCharacterEncoding("UTF-8");
             // 返回response
-            response.getWriter().append(responseJson);
+//            response.getWriter().append(responseJson);
+            return responseJson;
         } catch (Exception e) {
-            response.getWriter().append("{\"status\":1,\"msg\":\"\"}");
+//            response.getWriter().append("{\"status\":1,\"msg\":\"\"}");
+            return "{\"status\":1,\"msg\":\"\"}";
         }
     }
 }
