@@ -1,13 +1,10 @@
 package com.car.ctl.demo.controller;
 
-import com.baidu.dueros.samples.tax.TaxBot;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 /**
@@ -25,6 +22,7 @@ public class CarMoveController {
     @RequestMapping(value = "/carMove")
     public String carMove(@RequestBody String data) throws IOException {
         // 根据request创建Bot
+        System.out.println(data);
         CarMoveBot bot = new CarMoveBot(data);
 
         // 打开签名验证

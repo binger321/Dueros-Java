@@ -207,6 +207,7 @@ public class CarMoveBot extends BaseBot{
         carAction.setDisctance(distance);
         MessageSender messageSender = new MessageSender();
         messageSender.send(carAction);
+
         OutputSpeech outputSpeech = new OutputSpeech(OutputSpeech.SpeechType.PlainText, ret);
 
         Reprompt reprompt = new Reprompt(outputSpeech);

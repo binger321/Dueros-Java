@@ -3,6 +3,7 @@ package com.car.ctl.demo.service;
 import com.car.ctl.demo.common.MyEasyJsonUtil;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * To change this template use File | Settings | File Templates.
  * Description:
  */
+@Component
 public class MessageSender {
 
     @Autowired
