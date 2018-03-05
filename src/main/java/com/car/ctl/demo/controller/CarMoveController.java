@@ -22,7 +22,7 @@ import java.io.IOException;
 @RestController(value = "小车控制")
 @RequestMapping(value = "carControl")
 public class CarMoveController {
-    @RequestMapping(value = "/carMove",method = RequestMethod.GET)
+    @RequestMapping(value = "/carMove")
     public String carMove(@RequestBody String data) throws IOException {
         // 根据request创建Bot
         CarMoveBot bot = new CarMoveBot(data);
