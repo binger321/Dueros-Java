@@ -24,7 +24,7 @@ public class CarMoveController {
     @RequestMapping(value = "/carMove",method = RequestMethod.GET)
     public void carMove(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 根据request创建Bot
-        ConstellationBot bot = new ConstellationBot(request);
+        CarMoveBot bot = new CarMoveBot(request);
 
         // 打开签名验证
         // bot.enableVerify();
