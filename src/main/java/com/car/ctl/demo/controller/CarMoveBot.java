@@ -10,6 +10,7 @@ import com.baidu.dueros.data.response.card.TextCard;
 import com.baidu.dueros.model.Response;
 import com.car.ctl.demo.bean.CarAction;
 import com.car.ctl.demo.service.MessageSender;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -207,6 +208,7 @@ public class CarMoveBot extends BaseBot{
         carAction.setDisctance(distance);
         MessageSender messageSender = new MessageSender();
         messageSender.send(carAction);
+
 
         OutputSpeech outputSpeech = new OutputSpeech(OutputSpeech.SpeechType.PlainText, ret);
 
