@@ -8,6 +8,8 @@ import com.baidu.dueros.data.response.OutputSpeech;
 import com.baidu.dueros.data.response.Reprompt;
 import com.baidu.dueros.data.response.card.TextCard;
 import com.baidu.dueros.model.Response;
+import com.car.ctl.demo.bean.CarAction;
+import com.car.ctl.demo.service.MessageSender;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -84,15 +86,15 @@ public class CarMoveBot extends BaseBot{
     protected Response onInent(IntentRequest intentRequest) {
 
         // 判断NLU解析的意图名称是否匹配 inquiry
-        if ("constellation_query".equals(intentRequest.getIntentName())) {
+        if ("car_action".equals(intentRequest.getIntentName())) {
             // 判断NLU解析解析后是否存在这个槽位
-            if (getSlot("car_action") == null) {
+            if (getSlot("car_direction") == null) {
                 // 询问月薪槽位car_action
                 ask("car_action");
                 return askDirection();
-            } else if (getSlot("car_speed") == null) {
+            } else if (getSlot("car_distance") == null) {
                 // 询问城市槽位car_speed
-                ask("car_speed");
+                ask("car_distance");
                 return askSpeed();
             } else {
                 // 槽位完整
@@ -186,9 +188,9 @@ public class CarMoveBot extends BaseBot{
      * @return Response
      */
     private Response complete() {
-        // 获取多轮槽位值：小车方向 小车速度
-        String date = getSlot("car_action");
-        String query_subject = getSlot("car_speed");
+        // 获取多轮槽位值：小车方向 小车距离
+        String direction = getSlot("car_direction");
+        String distance = getSlot("car_distance");
         String ret = "我知道了";
 
         TextCard textCard = new TextCard(ret);
@@ -198,6 +200,13 @@ public class CarMoveBot extends BaseBot{
         setSessionAttribute("key_1", "value_1");
         setSessionAttribute("key_2", "value_2");
 
+
+        CarAction carAction = new CarAction();
+        carAction.setCode("1号");
+        carAction.setDirection(direction);
+        carAction.setDisctance(distance);
+        MessageSender messageSender = new MessageSender();
+        messageSender.send(carAction);
         OutputSpeech outputSpeech = new OutputSpeech(OutputSpeech.SpeechType.PlainText, ret);
 
         Reprompt reprompt = new Reprompt(outputSpeech);

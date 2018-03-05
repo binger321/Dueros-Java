@@ -1,5 +1,9 @@
 package com.car.ctl.demo.service;
 
+import com.car.ctl.demo.common.MyEasyJsonUtil;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Created with IntelliJ IDEA.
  * User: zhuyubin
@@ -10,7 +14,11 @@ package com.car.ctl.demo.service;
  */
 public class MessageSender {
 
-    public static void send(Object object){
-        return;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    public void send(Object object){
+        String actionJson = MyEasyJsonUtil.json2string(object);
+        System.out.println(actionJson);
+        this.rabbitTemplate.convertAndSend("carAction",actionJson);
     }
 }
