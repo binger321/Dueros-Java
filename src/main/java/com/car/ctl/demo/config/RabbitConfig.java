@@ -9,6 +9,6 @@ public class RabbitConfig {
 
     @Bean
     public Queue Queue() {
-        return new Queue("car.action");
+        return new Queue("car.action1");
     }
 }

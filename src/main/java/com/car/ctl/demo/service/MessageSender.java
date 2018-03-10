@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * Description:
  */
 public class MessageSender {
-    private final static String QUEUE_NAME = "car.action";
+    private final static String QUEUE_NAME = "car.action1";
     public void send(Object object){
         String actionJson = MyEasyJsonUtil.json2string(object);
         try {
