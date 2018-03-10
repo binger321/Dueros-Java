@@ -203,9 +203,13 @@ public class CarMoveBot extends BaseBot{
 
 
         CarAction carAction = new CarAction();
-        carAction.setCode("1号");
-        carAction.setDirection(direction);
-        carAction.setDisctance(distance);
+        carAction.setCode("num1");
+        if (direction.equals("向前")){
+            carAction.setDirection("forward");
+        }
+        if (distance.equals("一段")){
+            carAction.setDisctance("20cm");
+        }
         MessageSender messageSender = new MessageSender();
         messageSender.send(carAction);
 
