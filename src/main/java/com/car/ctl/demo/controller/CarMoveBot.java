@@ -204,7 +204,7 @@ public class CarMoveBot extends BaseBot{
 
         CarAction carAction = new CarAction();
         carAction.setCode("num1");
-        if (direction.equals("向前")){
+        if (direction.equals("前")){
             carAction.setDirection("forward");
         }
         if (distance.equals("一段")){
