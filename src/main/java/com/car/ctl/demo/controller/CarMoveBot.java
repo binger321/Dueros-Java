@@ -9,7 +9,9 @@ import com.baidu.dueros.data.response.Reprompt;
 import com.baidu.dueros.data.response.card.TextCard;
 import com.baidu.dueros.model.Response;
 import com.car.ctl.demo.bean.CarAction;
+import com.car.ctl.demo.bean.DirectionEnums;
 import com.car.ctl.demo.service.MessageSender;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -91,7 +93,7 @@ public class CarMoveBot extends BaseBot{
             // 判断NLU解析解析后是否存在这个槽位
             if (getSlot("car_direction") == null) {
                 // 询问月薪槽位car_action
-                ask("car_action");
+                ask("car_direction");
                 return askDirection();
             } else if (getSlot("car_distance") == null) {
                 // 询问城市槽位car_speed
@@ -131,21 +133,21 @@ public class CarMoveBot extends BaseBot{
     }
 
     /**
-     * 询问城市信息
+     * 询问方向
      *
      * @return Response 返回Response
      */
     private Response askDirection() {
 
-        TextCard textCard = new TextCard("您想往哪去呢?");
+        TextCard textCard = new TextCard("询问方向");
         textCard.setUrl("www:......");
         textCard.setAnchorText("setAnchorText");
-        textCard.addCueWord("您想去哪呢?");
+        textCard.addCueWord("您想让小车往哪个方向运动?你可以说前后左右，左前，右前等指令");
 
         setSessionAttribute("key_1", "value_1");
         setSessionAttribute("key_2", "value_2");
 
-        OutputSpeech outputSpeech = new OutputSpeech(OutputSpeech.SpeechType.PlainText, "您想去哪呢?");
+        OutputSpeech outputSpeech = new OutputSpeech(OutputSpeech.SpeechType.PlainText, "您想让小车往哪个方向运动?你可以说前后左右，左前，右前等指令");
 
         Reprompt reprompt = new Reprompt(outputSpeech);
 
@@ -155,24 +157,25 @@ public class CarMoveBot extends BaseBot{
     }
 
     /**
-     * 询问月薪
+     * 询问速度
      *
      * @return Response 返回Response
      */
     private Response askSpeed() {
 
-        TextCard textCard = new TextCard("您的速度是多少呢?");
+        TextCard textCard = new TextCard("询问速度");
         textCard.setUrl("www:......");
         textCard.setAnchorText("链接文本");
-        textCard.addCueWord("您的速度是多少呢?");
+        textCard.addCueWord("小车运行的速度该是多少呢?可说1至100之间任意自然数！");
 
         // 设置会话信息
         setSessionAttribute("key_1", "value_1");
         setSessionAttribute("key_2", "value_2");
 
-        OutputSpeech outputSpeech = new OutputSpeech(OutputSpeech.SpeechType.PlainText, "您的速度是多少呢?");
+        OutputSpeech outputSpeech = new OutputSpeech(OutputSpeech.SpeechType.PlainText, "小车运行的速度该是多少呢?可说1至100之间任意自然数！");
 
         // 构造reprompt
+
         Reprompt reprompt = new Reprompt(outputSpeech);
 
         Response response = new Response(outputSpeech, textCard, reprompt);
@@ -192,34 +195,44 @@ public class CarMoveBot extends BaseBot{
         // 获取多轮槽位值：小车方向 小车距离
         String direction = getSlot("car_direction");
         String distance = getSlot("car_distance");
-        String ret = "我知道了";
+        Integer speed = Integer.parseInt(getSlot("car_speed"));
 
-        TextCard textCard = new TextCard(ret);
-        textCard.setAnchorText("setAnchorText");
-        textCard.addCueWord("查询成功");
+
 
         setSessionAttribute("key_1", "value_1");
         setSessionAttribute("key_2", "value_2");
 
 
         CarAction carAction = new CarAction();
-        carAction.setCode("num1");
-        if (direction.equals("前")){
-            carAction.setDirection("forward");
+        carAction.setCode("Number one");
+        for (DirectionEnums directionEnums : DirectionEnums.values()) {
+            if (direction.equals(directionEnums.getOrderWord())){
+                carAction.setDirection(directionEnums.getOrder());
+            }
         }
-        if (distance.equals("一段")){
-            carAction.setDisctance("20cm");
+        carAction.setSpeed(speed);
+        if (StringUtils.isNotBlank(distance)){
+            carAction.setDistance(distance);
         }
+
+        //把指令发给消息队列
         MessageSender messageSender = new MessageSender();
         messageSender.send(carAction);
 
-
+        String ret = "我知道了,小车将以" + carAction.getSpeed() + "速度向" + direction+ "运动";
+        if (StringUtils.isNotBlank(carAction.getDistance())){
+            ret = ret + carAction.getDistance();
+        }
         OutputSpeech outputSpeech = new OutputSpeech(OutputSpeech.SpeechType.PlainText, ret);
 
         Reprompt reprompt = new Reprompt(outputSpeech);
 
         // 主动结束会话
         this.endDialog();
+
+        TextCard textCard = new TextCard(ret);
+        textCard.setAnchorText("setAnchorText");
+        textCard.addCueWord("查询成功");
 
         Response response = new Response(outputSpeech, textCard, reprompt);
 

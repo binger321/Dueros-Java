@@ -23,7 +23,12 @@ public class CarAction {
     /**
      * 距离
      */
-    private String disctance;
+    private String distance;
+
+    /**
+     * 速度
+     */
+    private Integer speed = 25;
 
     public String getCode() {
         return code;
@@ -41,11 +46,19 @@ public class CarAction {
         this.direction = direction;
     }
 
-    public String getDisctance() {
-        return disctance;
+    public String getDistance() {
+        return distance;
     }
 
-    public void setDisctance(String disctance) {
-        this.disctance = disctance;
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public Integer getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
     }
 }
