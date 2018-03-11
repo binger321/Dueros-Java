@@ -95,9 +95,9 @@ public class CarMoveBot extends BaseBot{
                 // 询问月薪槽位car_action
                 ask("car_direction");
                 return askDirection();
-            } else if (getSlot("car_distance") == null) {
+            } else if (getSlot("car_speed") == null) {
                 // 询问城市槽位car_speed
-                ask("car_distance");
+                ask("car_speed");
                 return askSpeed();
             } else {
                 // 槽位完整
